@@ -1,0 +1,23 @@
+[req]
+default_bits=4096
+prompt=no
+default_md=sha256
+distinguished_name=dn
+
+
+[dn]
+C=US
+ST=California
+L=Long Beach
+O=E-LIFEHUB LTD
+OU=77
+emailAddress=info@e-lifehub.com
+CN=building-crm.mac
+
+[ alternate_names ]
+DNS.1=building-crm.mac
+DNS.2=www.building-crm.mac
+DNS.3=localhost
+IP.1=127.0.0.1
+IP.2=192.168.1.129
+IP.3=::1

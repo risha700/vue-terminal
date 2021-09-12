@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+machine_ip="$(ipconfig getifaddr en0)"
+ip=${1:-$machine_ip}
+sed -E -i'.bak' "s/(IP.2=).+/IP.2=${ip}/g" $(pwd)/server.csr.cnf
+echo "updated server config"
+sed -E -i'.bak' "s/(IP.2=).+/IP.2=${ip}/g" $(pwd)/v3.ext
+echo "updated server ext file"
+
+openssl req -new -sha256 -nodes -out server.csr -newkey rsa:2048 -keyout server.key -config <( cat server.csr.cnf )
+openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 500 -sha256 -extfile v3.ext
+echo "certificate is ready for ${ip}"
